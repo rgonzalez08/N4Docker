@@ -9,7 +9,7 @@ First, install Docker
 log into the docker hub 
 
 ```
-$ sudo apt install docker docker-compose git
+$ sudo apt-get install docker docker-compose git
 $ sudo docker login -u <username> -p <key>
 ```
 
