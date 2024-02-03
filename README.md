@@ -20,8 +20,9 @@ $ git clone https://github.com/rgonzalez08/N4Docker.git
 $ cd N4Docker
 ```
 
-Finally, pull the containers and start NF:
+Finally, pull the containers and start Niagara:
 ```
+$ sudo docker login -u <username> -p <key>
 $ sudo docker-compose pull
 $ sudo docker-compose up -d
 ```

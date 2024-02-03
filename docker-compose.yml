@@ -36,10 +36,10 @@ services:
       - NET_BIND_SERVICE
 
     ports:
-      - "443:443" # standard HTTPS port
-      - "8443:8443" # alternate web services port for Linux station
-      - "4911:4911" # standard Foxs port
-      - "5011:5011" # standard platform TLS port
+     # - "443:443" # standard HTTPS port
+     # - "8443:8443" # alternate web services port for Linux station
+     # - "4911:4911" # standard Foxs port
+     # - "5011:5011" # standard platform TLS port
 
 volumes:
   niagara-user-home:
