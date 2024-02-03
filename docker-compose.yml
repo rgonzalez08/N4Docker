@@ -1,0 +1,46 @@
+#
+# Copyright 2023 Tridium, Inc. All Rights Reserved.
+#
+
+# Usage: This docker-compose.yml file defines the configuration for running the Niagara container.
+# It sets environment variables, mounts volumes, and exposes ports necessary for running the Niagara application.
+# Modify the environment variables and volumes according to your specific requirements.
+
+version: "3.8"
+services:
+  niagara:
+    restart: always
+    environment:
+      - NIAGARA_TZ=America/Chicago
+      - LOG_LEVEL=INFO
+      # If true, the container will not exit upon encountering a fatal error with the station or daemon.  Sometimes useful for debugging.
+      # - NEVER_EXIT=true
+      # Allow replacing modules in the container image with different versions. Useful for applying patches without rebuilding the container.
+      # - NIAGARA_ALLOW_PATCHES=true
+      # If a custom nre.properties configuration is required, then the NIAGARA_OVERRIDE_NRE_PROPS environment variable must be set to "true".
+      # - NIAGARA_OVERRIDE_NRE_PROPS=true
+      - NIAGARA_STATION_STARTING_HEAP=512M
+      - NIAGARA_STATION_MAX_HEAP=1024M
+      # For debugging the station startup, set the nre_debug property to "true".
+      # - nre_debug=true
+      # For debugging the niagara daemon startup, set the java_debug property to "true".
+      # - java_debug=true
+    image: rgonzo08/n4_amd64_4.13.2.18 # Specify the provided image name and version, for example: niagara/fda/amd64/base:4.13.0.182_1.4.67.
+    # if network_mode is host, comment out the entire ports section. Host mode connects the container network port
+    # directly to the hosts network adapter without NAT routing. Use host mode if need to support Niagara network
+    # or BACnet device discovery which are broadcast UDP messages blocked by NAT routing.
+    network_mode: "host"
+    volumes:
+      - niagara-user-home:/home/niagara
+    cap_add:
+      - NET_BIND_SERVICE
+
+    ports:
+      - "443:443" # standard HTTPS port
+      - "8443:8443" # alternate web services port for Linux station
+      - "4911:4911" # standard Foxs port
+      - "5011:5011" # standard platform TLS port
+
+volumes:
+  niagara-user-home:
+
